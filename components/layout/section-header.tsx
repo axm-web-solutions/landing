@@ -18,8 +18,8 @@ type SectionHeaderProps = {
 }
 
 const titleSizes = {
-  md: 'text-3xl xs:text-4xl sm:text-5xl',
-  lg: 'text-3xl xs:text-4xl sm:text-5xl lg:text-6xl',
+  md: 'text-title-sm',
+  lg: 'text-title',
 }
 
 /** Eyebrow + h2 + optional lead paragraph: the heading pattern shared by every content section. */
@@ -27,9 +27,9 @@ export function SectionHeader({ eyebrow, title, lead, size = 'lg', tone = 'light
   return (
     <div className={cn('max-w-2xl', className)}>
       <Eyebrow className={cn(tone === 'dark' && 'text-brand-teal-bright', eyebrowClassName)}>{eyebrow}</Eyebrow>
-      <h2 className={cn('text-balance font-semibold tracking-[-0.04em]', titleSizes[size])}>{title}</h2>
+      <h2 className={cn('text-balance', titleSizes[size])}>{title}</h2>
       {lead && (
-        <p className={cn('mt-6 text-pretty text-base leading-7 sm:text-lg sm:leading-8', tone === 'dark' ? 'text-white/70' : 'text-slate-500')}>{lead}</p>
+        <p className={cn('text-lead mt-5 text-pretty sm:mt-6', tone === 'dark' ? 'text-white/70' : 'text-slate-500')}>{lead}</p>
       )}
     </div>
   )

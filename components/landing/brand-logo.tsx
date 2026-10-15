@@ -7,7 +7,7 @@ export function BrandLogo({ tagline }: { tagline: string }) {
         <Building2 aria-hidden />
       </span>
       <span>
-        <strong className="block text-lg tracking-tight">
+        <strong className="block font-display text-lg tracking-tight">
           Edi<span className="text-brand-teal-bright">Feasy</span>
         </strong>
         <small className="hidden text-[10px] uppercase tracking-[0.2em] text-white/65 xs:block">{tagline}</small>

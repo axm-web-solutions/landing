@@ -22,7 +22,7 @@ export function Testimonials() {
       <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <SectionHeader eyebrow={testimonials.eyebrow} title={testimonials.title} className="max-w-3xl" />
         <div className="flex shrink-0 flex-wrap items-center gap-x-3 gap-y-1 self-start rounded-full bg-surface-teal-alt px-5 py-3 md:self-auto">
-          <span className="text-2xl font-bold text-brand-ink">{testimonials.rating}</span>
+          <span className="font-display text-2xl font-bold text-brand-ink">{testimonials.rating}</span>
           <Stars label={testimonials.starsLabel} className="text-brand-gold" />
           <span className="text-sm text-slate-500">{testimonials.ratingLabel}</span>
         </div>
@@ -33,7 +33,7 @@ export function Testimonials() {
           <figure key={name} className="flex flex-col justify-between rounded-3xl border border-slate-200 bg-surface-card p-6 sm:p-7 md:min-h-60">
             <div>
               <Stars label={testimonials.starsLabel} className="mb-5 block text-sm tracking-[0.2em] text-brand-gold" />
-              <blockquote className="text-pretty text-base leading-7 text-brand-ink sm:text-lg sm:leading-8">{quote}</blockquote>
+              <blockquote className="text-lead text-pretty text-brand-ink">{quote}</blockquote>
             </div>
             <figcaption className="mt-6 border-t border-slate-200 pt-5">
               <p className="font-semibold text-brand-ink">{name}</p>

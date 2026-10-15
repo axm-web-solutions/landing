@@ -5,7 +5,7 @@ import type { ComponentProps } from 'react'
 import { cn } from '@/lib/utils'
 
 export const ctaLinkVariants = cva(
-  'group inline-flex cursor-pointer items-center justify-center gap-2 font-semibold transition outline-none disabled:pointer-events-none disabled:opacity-60 focus-visible:ring-3 focus-visible:ring-brand-teal/60 focus-visible:ring-offset-2',
+  'group inline-flex cursor-pointer items-center font-display justify-center gap-2 font-semibold transition outline-none disabled:pointer-events-none disabled:opacity-60 focus-visible:ring-3 focus-visible:ring-brand-teal/60 focus-visible:ring-offset-2',
   {
     variants: {
       variant: {

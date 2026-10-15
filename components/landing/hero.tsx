@@ -1,6 +1,6 @@
 'use client'
 
-import { ShieldCheck, Sparkles } from 'lucide-react'
+import { Cloud, ShieldCheck } from 'lucide-react'
 
 import { Container } from '@/components/layout/container'
 import { TrialButton } from '@/components/trial/trial-button'
@@ -35,14 +35,8 @@ export function Hero() {
 
       <Container className="relative grid items-center gap-10 pb-16 sm:pb-20 lg:grid-cols-[1.05fr_.95fr] lg:gap-12">
         <div className="min-w-0 max-w-2xl">
-          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-teal/40 bg-brand-teal/15 px-4 py-1.5 text-sm font-semibold text-brand-teal-soft">
-            <Sparkles aria-hidden className="size-4" />
-            {t.hero.badge}
-          </p>
-          <h1 className="text-balance break-words text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.04em] xs:text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            {t.hero.title}
-          </h1>
-          <p className="mt-6 max-w-xl text-pretty text-base leading-7 text-white/70 sm:mt-7 sm:text-lg sm:leading-8">{t.hero.intro}</p>
+          <h1 className="text-display text-balance break-words">{t.hero.title}</h1>
+          <p className="text-lead mt-6 max-w-xl text-pretty text-white/70 sm:mt-7">{t.hero.intro}</p>
           <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row">
             <TrialButton source="hero" withArrow>
               {t.trial.cta}
@@ -51,12 +45,16 @@ export function Hero() {
               {t.hero.explore}
             </CtaLink>
           </div>
-          <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/55 sm:mt-12">
-            <ShieldCheck aria-hidden className="shrink-0 text-brand-teal" size={20} />
-            <span>{t.hero.trusted}</span>
-            <span aria-hidden className="hidden size-1 rounded-full bg-white/30 sm:block" />
-            <span>{t.hero.cloud}</span>
-          </div>
+          <ul className="mt-10 flex flex-col gap-3 text-sm text-white/60 sm:mt-12 sm:flex-row sm:items-center sm:gap-6">
+            <li className="flex items-center gap-2.5">
+              <ShieldCheck aria-hidden className="size-5 shrink-0 text-brand-teal" />
+              {t.hero.trusted}
+            </li>
+            <li className="flex items-center gap-2.5">
+              <Cloud aria-hidden className="size-5 shrink-0 text-brand-teal" />
+              {t.hero.cloud}
+            </li>
+          </ul>
         </div>
 
         <div className="relative h-80 xs:h-96 sm:h-[28rem] lg:h-[36rem]">
@@ -70,8 +68,8 @@ export function Hero() {
             />
             <div className="absolute inset-2 rounded-[1.1rem] bg-gradient-to-t from-brand-navy/75 via-transparent to-white/10 sm:rounded-[1.5rem]" />
             <div className="absolute inset-x-6 bottom-6 sm:inset-x-8 sm:bottom-8">
-              <p className="text-xs uppercase tracking-[0.18em] text-brand-teal-soft">{t.hero.cardEyebrow}</p>
-              <p className="mt-2 max-w-xs text-xl font-semibold text-white sm:text-2xl">{t.hero.cardTitle}</p>
+              <p className="text-[0.6875rem] uppercase tracking-[0.12em] text-brand-teal-soft sm:text-xs sm:tracking-[0.18em]">{t.hero.cardEyebrow}</p>
+              <p className="mt-2 max-w-xs font-display text-xl font-semibold text-white sm:text-2xl">{t.hero.cardTitle}</p>
               <div className="mt-3 flex gap-1 sm:mt-4" role="group" aria-label={t.hero.carouselLabel}>
                 {images.map((image, index) => (
                   <button

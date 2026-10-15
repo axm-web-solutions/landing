@@ -40,6 +40,8 @@ Variables (solo servidor, ver `.env.example`): `SUPABASE_URL`, `SUPABASE_SERVICE
 - Textos solo en `content/landing.ts` (ambos idiomas). Componentes usan `const { t } = useLanguage()`.
 - URLs, anclas e imágenes solo en `lib/site-config.ts`.
 - Colores con tokens (`bg-brand-navy`, `text-brand-teal-ink`, `bg-surface-*`), nunca hex en componentes.
+- Tipografía: Inter (`font-sans`, texto) + Plus Jakarta Sans (`font-display`, títulos/botones), cargadas con `next/font` en `app/layout.tsx`. Usa la escala fluida de `globals.css`: `text-display` (h1), `text-title` / `text-title-sm` (h2), `text-lead` (párrafos destacados); no fijes tamaños por breakpoint en títulos.
+- Variante `short:` = viewport de poca altura (teléfono horizontal); úsala en overlays y elementos de altura completa.
 - Secciones nuevas: `<Section tone spacing>` + `<SectionHeader>`; CTAs con `<CtaLink>`.
 - Mobile-first; responsive hasta 4K (la raíz escala a 112.5% en ≥1920px y 137.5% en ≥2560px). Usa `rem`.
 - Estilo de código: comillas simples, sin punto y coma, imports con alias `@/`.

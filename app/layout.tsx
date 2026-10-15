@@ -1,6 +1,10 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
+const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta', display: 'swap' })
 
 export const metadata: Metadata = {
   title: 'EdiFeasy | Administración inteligente de condominios',
@@ -39,8 +43,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es">
-      <body className="min-h-svh bg-surface text-brand-ink antialiased">
+    <html lang="es" className={`${inter.variable} ${jakarta.variable}`}>
+      <body className="min-h-svh bg-surface font-sans text-brand-ink antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

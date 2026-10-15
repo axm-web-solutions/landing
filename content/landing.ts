@@ -14,7 +14,6 @@ export type Dictionary = {
   hero: {
     title: string
     intro: string
-    badge: string
     explore: string
     trusted: string
     cloud: string
@@ -81,7 +80,6 @@ const es: Dictionary = {
   hero: {
     title: 'Administra tu condominio con claridad.',
     intro: 'EdiFeasy reúne residentes, finanzas y operación diaria en una plataforma segura y fácil de usar.',
-    badge: '7 días de prueba gratis',
     explore: 'Conoce la plataforma',
     trusted: 'Diseñado para administradores modernos',
     cloud: '100% en la nube',
@@ -208,7 +206,6 @@ const en: Dictionary = {
   hero: {
     title: 'Run your condominium with clarity.',
     intro: 'EdiFeasy brings residents, finances and day-to-day operations together in one secure platform.',
-    badge: '7-day free trial',
     explore: 'Explore the platform',
     trusted: 'Built for modern property managers',
     cloud: '100% cloud-based',

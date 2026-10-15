@@ -28,7 +28,7 @@ export function TrialSection() {
           <li key={step.title} className="flex gap-5 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm md:flex-col lg:flex-row lg:items-center">
             <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-brand-teal text-lg font-bold text-brand-navy">{index + 1}</span>
             <div>
-              <h3 className="text-lg font-semibold">{step.title}</h3>
+              <h3 className="font-display text-lg font-semibold">{step.title}</h3>
               <p className="mt-1 leading-7 text-white/65">{step.description}</p>
             </div>
           </li>

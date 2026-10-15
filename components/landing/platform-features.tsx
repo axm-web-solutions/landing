@@ -33,7 +33,7 @@ export function PlatformFeatures() {
               <div className="mb-10 grid size-12 place-items-center rounded-2xl bg-brand-mist text-brand-teal-ink sm:mb-14">
                 <Icon aria-hidden />
               </div>
-              <h3 className="text-xl font-semibold text-brand-ink">{title}</h3>
+              <h3 className="font-display text-xl font-semibold text-brand-ink">{title}</h3>
               <p className="mt-3 leading-7 text-slate-500">{description}</p>
               <CtaLink href={siteConfig.appUrl} external variant="text" size="inline" withArrow className="mt-auto self-start pt-4 text-sm">
                 {platform.cta}

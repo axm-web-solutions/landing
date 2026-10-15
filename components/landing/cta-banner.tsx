@@ -15,8 +15,8 @@ export function CtaBanner() {
       <div aria-hidden className="absolute -right-20 -top-40 size-96 rounded-full border-[60px] border-white/10" />
       <div className="relative">
         <Eyebrow className="mb-3 text-brand-teal-deep">{t.cta.eyebrow}</Eyebrow>
-        <h2 className="max-w-2xl text-balance text-3xl font-semibold tracking-[-0.04em] xs:text-4xl sm:text-5xl">{t.cta.title}</h2>
-        <p className="mt-3 text-lg text-brand-navy/75">{t.cta.lead}</p>
+        <h2 className="text-title-sm max-w-2xl text-balance">{t.cta.title}</h2>
+        <p className="text-lead mt-3 text-brand-navy/75">{t.cta.lead}</p>
       </div>
       <div className="relative flex w-full shrink-0 flex-col items-center gap-3 sm:w-auto md:items-end">
         <TrialButton source="cta-banner" variant="navy" size="lg" withArrow className="w-full sm:w-auto">
