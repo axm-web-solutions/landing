@@ -7,15 +7,19 @@ export interface LeadStore {
   save(lead: LeadRecord): Promise<void>
 }
 
-/** Inserts into the `leads` table through Supabase's REST API using the server-only service role key. */
+/**
+ * Inserts into the `leads` table through Supabase's REST API using a server-only key:
+ * a secret key (`sb_secret_…`, sent only as `apikey`) or a legacy service_role JWT (also sent as Bearer).
+ */
 function createSupabaseStore(url: string, serviceRoleKey: string, table: string): LeadStore {
+  const isSecretKey = serviceRoleKey.startsWith('sb_')
   return {
     async save(lead) {
       const response = await fetch(`${url.replace(/\/$/, '')}/rest/v1/${table}`, {
         method: 'POST',
         headers: {
           apikey: serviceRoleKey,
-          Authorization: `Bearer ${serviceRoleKey}`,
+          ...(!isSecretKey && { Authorization: `Bearer ${serviceRoleKey}` }),
           'Content-Type': 'application/json',
           Prefer: 'return=minimal',
         },
