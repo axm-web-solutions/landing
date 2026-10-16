@@ -8,10 +8,14 @@ export class LeadStoreError extends Error {
   constructor(
     readonly code: LeadSaveErrorCode,
     message: string,
+    /** Public, non-secret context (e.g. the Supabase host) shown next to the code. */
+    readonly detail?: string,
   ) {
     super(message)
   }
 }
+
+const printableAscii = /^[!-~]+$/
 
 function codeForStatus(status: number): LeadSaveErrorCode {
   if (status === 401 || status === 403) return 'auth'
@@ -32,7 +36,17 @@ function createSupabaseStore(url: string, serviceRoleKey: string, table: string)
   const isSecretKey = serviceRoleKey.startsWith('sb_')
   return {
     async save(lead) {
-      const response = await fetch(`${url}/rest/v1/${table}`, {
+      let endpoint: URL
+      try {
+        endpoint = new URL(`/rest/v1/${table}`, url)
+      } catch {
+        throw new LeadStoreError('url', `SUPABASE_URL is not a valid URL: ${JSON.stringify(url)}`, url.slice(0, 60))
+      }
+      if (!printableAscii.test(serviceRoleKey)) {
+        throw new LeadStoreError('key', 'SUPABASE_SERVICE_ROLE_KEY contains spaces or invalid characters')
+      }
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           apikey: serviceRoleKey,
@@ -60,7 +74,9 @@ function createSupabaseStore(url: string, serviceRoleKey: string, table: string)
         }),
         cache: 'no-store',
       }).catch((error: unknown) => {
-        throw new LeadStoreError('network', `Supabase unreachable at ${url}: ${String(error)}`)
+        const cause = (error as { cause?: { code?: string } }).cause?.code
+        const code = cause === 'ENOTFOUND' || cause === 'EAI_AGAIN' ? 'dns' : 'network'
+        throw new LeadStoreError(code, `Supabase unreachable at ${endpoint.host}: ${String(error)} (${cause ?? 'no cause'})`, endpoint.host)
       })
       if (!response.ok) {
         throw new LeadStoreError(codeForStatus(response.status), `Supabase insert failed (${response.status}): ${await response.text()}`)
@@ -84,7 +100,10 @@ function createFileStore(): LeadStore {
 const cleanEnv = (value: string | undefined) => value?.trim().replace(/^['"]|['"]$/g, '').trim() || undefined
 
 export function getLeadStore(): LeadStore | null {
-  const url = cleanEnv(process.env.SUPABASE_URL)?.replace(/\/+$/, '').replace(/\/rest\/v1$/, '')
+  const url = cleanEnv(process.env.SUPABASE_URL)
+    ?.replace(/\/+$/, '')
+    .replace(/\/rest\/v1$/, '')
+    .replace(/^(?!https?:\/\/)/, 'https://')
   const key = cleanEnv(process.env.SUPABASE_SERVICE_ROLE_KEY)
   const table = cleanEnv(process.env.SUPABASE_LEADS_TABLE) ?? 'leads'
   if (url && key) return createSupabaseStore(url, key, table)

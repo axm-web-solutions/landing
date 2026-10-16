@@ -77,7 +77,7 @@ export function TrialForm({ source }: { source: string }) {
       // `client`: the request never reached the action (offline, or a page left open from an older deployment).
       const result = await createLead(data).catch(() => ({ status: 'error' as const, code: 'client' }))
       if (result.status === 'invalid') return setErrors(result.errors)
-      setErrorCode(result.status === 'error' ? result.code : null)
+      setErrorCode(result.status === 'error' ? [result.code, 'detail' in result && result.detail].filter(Boolean).join(' · ') : null)
       setStatus(result.status)
     })
   }

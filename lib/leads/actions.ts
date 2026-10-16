@@ -31,6 +31,7 @@ export async function createLead(form: FormData): Promise<CreateLeadResult> {
     return { status: 'success' }
   } catch (error) {
     console.error('[leads] Failed to save lead', error)
-    return { status: 'error', code: error instanceof LeadStoreError ? error.code : 'unknown' }
+    if (error instanceof LeadStoreError) return { status: 'error', code: error.code, detail: error.detail }
+    return { status: 'error', code: 'unknown' }
   }
 }
