@@ -58,7 +58,7 @@ export type Dictionary = {
       consent: string
       submit: string
       submitting: string
-      errors: { required: string; invalid: string; email: string; phone: string; tooLong: string; consent: string; server: string }
+      errors: { required: string; invalid: string; email: string; phone: string; tooLong: string; consent: string; server: string; reference: string }
       success: { title: string; description: string; action: string; redirecting: string }
     }
   }
@@ -168,6 +168,7 @@ const es: Dictionary = {
         tooLong: 'El texto es demasiado largo.',
         consent: 'Necesitamos tu autorización para contactarte.',
         server: 'No pudimos guardar tus datos en este momento. Puedes continuar al registro de todas formas.',
+        reference: 'Código',
       },
       success: {
         title: '¡Listo! Ya casi empiezas.',
@@ -294,6 +295,7 @@ const en: Dictionary = {
         tooLong: 'This text is too long.',
         consent: 'We need your permission to contact you.',
         server: 'We could not save your details right now. You can still continue to sign-up.',
+        reference: 'Code',
       },
       success: {
         title: 'All set! You are almost there.',

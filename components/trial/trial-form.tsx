@@ -41,6 +41,7 @@ export function TrialForm({ source }: { source: string }) {
   const form = t.trial.form
   const [errors, setErrors] = useState<LeadErrors>({})
   const [status, setStatus] = useState<Status>('editing')
+  const [errorCode, setErrorCode] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
   const [startedAt] = useState(() => Date.now())
   const formRef = useRef<HTMLFormElement>(null)
@@ -73,9 +74,11 @@ export function TrialForm({ source }: { source: string }) {
     for (const [key, value] of Object.entries({ ...readTracking(), locale, source, startedAt: String(startedAt) })) data.set(key, value)
 
     startTransition(async () => {
-      const result = await createLead(data).catch(() => ({ status: 'error' as const }))
-      if (result.status === 'invalid') setErrors(result.errors)
-      else setStatus(result.status)
+      // `client`: the request never reached the action (offline, or a page left open from an older deployment).
+      const result = await createLead(data).catch(() => ({ status: 'error' as const, code: 'client' }))
+      if (result.status === 'invalid') return setErrors(result.errors)
+      setErrorCode(result.status === 'error' ? result.code : null)
+      setStatus(result.status)
     })
   }
 
@@ -206,7 +209,14 @@ export function TrialForm({ source }: { source: string }) {
         {status === 'error' && (
           <div role="alert" className="flex flex-col gap-3 rounded-2xl bg-amber-50 p-4 text-sm text-amber-900 sm:col-span-2 sm:flex-row sm:items-center">
             <AlertCircle aria-hidden className="size-5 shrink-0" />
-            <p className="flex-1">{form.errors.server}</p>
+            <p className="flex-1">
+              {form.errors.server}
+              {errorCode && (
+                <span className="mt-1 block text-xs opacity-70">
+                  {form.errors.reference}: {errorCode}
+                </span>
+              )}
+            </p>
             <CtaLink href={siteConfig.signupUrl} variant="text" size="inline" withArrow className="text-sm">
               {form.success.action}
             </CtaLink>

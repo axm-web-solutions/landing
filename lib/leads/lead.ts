@@ -34,7 +34,12 @@ export type LeadField = keyof LeadInput | 'consent'
 export type LeadFieldError = 'required' | 'invalid' | 'tooLong'
 export type LeadErrors = Partial<Record<LeadField, LeadFieldError>>
 
-export type CreateLeadResult = { status: 'success' } | { status: 'invalid'; errors: LeadErrors } | { status: 'error' }
+export type LeadSaveErrorCode = 'config' | 'auth' | 'table' | 'data' | 'network' | 'upstream' | 'unknown'
+
+export type CreateLeadResult =
+  | { status: 'success' }
+  | { status: 'invalid'; errors: LeadErrors }
+  | { status: 'error'; code: LeadSaveErrorCode }
 
 const maxLength: Record<'fullName' | 'email' | 'phone' | 'condoName' | 'city', number> = {
   fullName: 120,

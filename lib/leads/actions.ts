@@ -3,7 +3,7 @@
 import { headers } from 'next/headers'
 
 import { parseLead, parseLeadMeta, type CreateLeadResult } from '@/lib/leads/lead'
-import { getLeadStore } from '@/lib/leads/store'
+import { getLeadStore, LeadStoreError } from '@/lib/leads/store'
 
 const minFillTimeMs = 1500
 
@@ -18,7 +18,7 @@ export async function createLead(form: FormData): Promise<CreateLeadResult> {
   const store = getLeadStore()
   if (!store) {
     console.error('[leads] No lead store configured. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.')
-    return { status: 'error' }
+    return { status: 'error', code: 'config' }
   }
 
   try {
@@ -31,6 +31,6 @@ export async function createLead(form: FormData): Promise<CreateLeadResult> {
     return { status: 'success' }
   } catch (error) {
     console.error('[leads] Failed to save lead', error)
-    return { status: 'error' }
+    return { status: 'error', code: error instanceof LeadStoreError ? error.code : 'unknown' }
   }
 }
