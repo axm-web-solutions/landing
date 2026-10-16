@@ -36,6 +36,12 @@ function createSupabaseStore(url: string, serviceRoleKey: string, table: string)
   const isSecretKey = serviceRoleKey.startsWith('sb_')
   return {
     async save(lead) {
+      // Common dashboard mix-ups: a key pasted as the URL, or the public key used as the server key.
+      if (/^(https?:\/\/)?sb_/i.test(url)) throw new LeadStoreError('url', 'SUPABASE_URL contains an API key instead of the project URL', 'url-is-a-key')
+      if (serviceRoleKey.startsWith('sb_publishable_')) {
+        throw new LeadStoreError('key', 'SUPABASE_SERVICE_ROLE_KEY is the publishable key; use the sb_secret_ key', 'publishable-key')
+      }
+
       let endpoint: URL
       try {
         endpoint = new URL(`/rest/v1/${table}`, url)
