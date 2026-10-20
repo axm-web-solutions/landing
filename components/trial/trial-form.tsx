@@ -3,15 +3,14 @@
 import { AlertCircle, CheckCircle2, LoaderCircle } from 'lucide-react'
 import { useEffect, useRef, useState, useTransition, type FormEvent } from 'react'
 
-import { CtaLink } from '@/components/ui/cta-link'
+import { ctaLinkVariants } from '@/components/ui/cta-link'
 import { Field, controlClassName } from '@/components/ui/field'
 import type { Dictionary } from '@/content/landing'
 import { useLanguage } from '@/lib/i18n/language-provider'
 import { createLead } from '@/lib/leads/actions'
 import { contactTimes, leadRoles, parseLead, unitRanges, type LeadErrors, type LeadField } from '@/lib/leads/lead'
-import { siteConfig } from '@/lib/site-config'
+import { cn } from '@/lib/utils'
 
-const redirectDelayMs = 2500
 const scrollAreaClassName = 'min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:px-8 sm:py-6'
 
 type Status = 'editing' | 'success' | 'error'
@@ -36,21 +35,16 @@ function readTracking() {
   }
 }
 
-export function TrialForm({ source }: { source: string }) {
+export function TrialForm({ source, onDone }: { source: string; onDone: () => void }) {
   const { locale, t } = useLanguage()
   const form = t.trial.form
   const [errors, setErrors] = useState<LeadErrors>({})
   const [status, setStatus] = useState<Status>('editing')
   const [errorCode, setErrorCode] = useState<string | null>(null)
+  const [email, setEmail] = useState('')
   const [pending, startTransition] = useTransition()
   const [startedAt] = useState(() => Date.now())
   const formRef = useRef<HTMLFormElement>(null)
-
-  useEffect(() => {
-    if (status !== 'success') return
-    const timeout = window.setTimeout(() => window.location.assign(siteConfig.signupUrl), redirectDelayMs)
-    return () => window.clearTimeout(timeout)
-  }, [status])
 
   // Bring the first invalid field (or the server alert) into view: the submit bar is pinned, so it may be far below.
   useEffect(() => {
@@ -71,6 +65,7 @@ export function TrialForm({ source }: { source: string }) {
     }
 
     setErrors({})
+    setEmail(parsed.data.email)
     for (const [key, value] of Object.entries({ ...readTracking(), locale, source, startedAt: String(startedAt) })) data.set(key, value)
 
     startTransition(async () => {
@@ -87,11 +82,13 @@ export function TrialForm({ source }: { source: string }) {
       <div role="status" className={`${scrollAreaClassName} flex flex-col items-center pb-[max(1.5rem,env(safe-area-inset-bottom))] text-center sm:py-10`}>
         <CheckCircle2 aria-hidden className="size-14 shrink-0 text-brand-teal-ink" />
         <h3 className="mt-5 font-display text-2xl font-bold tracking-tight">{form.success.title}</h3>
-        <p className="mt-3 max-w-md text-pretty leading-7 text-slate-500">{form.success.description}</p>
-        <CtaLink href={siteConfig.signupUrl} variant="navy" size="lg" withArrow className="mt-8 w-full sm:w-auto">
+        <p className="mt-3 max-w-md text-pretty leading-7 text-slate-500">
+          {form.success.description} <strong className="break-all text-brand-ink">{email}</strong>
+        </p>
+        <p className="mt-3 max-w-md text-pretty text-sm leading-6 text-slate-400">{form.success.note}</p>
+        <button type="button" onClick={onDone} className={cn(ctaLinkVariants({ variant: 'navy', size: 'lg' }), 'mt-8 w-full cursor-pointer sm:w-auto')}>
           {form.success.action}
-        </CtaLink>
-        <p className="mt-4 text-sm text-slate-400">{form.success.redirecting}</p>
+        </button>
       </div>
     )
   }
@@ -207,7 +204,7 @@ export function TrialForm({ source }: { source: string }) {
         </div>
 
         {status === 'error' && (
-          <div role="alert" className="flex flex-col gap-3 rounded-2xl bg-amber-50 p-4 text-sm text-amber-900 sm:col-span-2 sm:flex-row sm:items-center">
+          <div role="alert" className="flex gap-3 rounded-2xl bg-amber-50 p-4 text-sm text-amber-900 sm:col-span-2 sm:items-center">
             <AlertCircle aria-hidden className="size-5 shrink-0" />
             <p className="flex-1">
               {form.errors.server}
@@ -217,9 +214,6 @@ export function TrialForm({ source }: { source: string }) {
                 </span>
               )}
             </p>
-            <CtaLink href={siteConfig.signupUrl} variant="text" size="inline" withArrow className="text-sm">
-              {form.success.action}
-            </CtaLink>
           </div>
         )}
       </div>

@@ -20,7 +20,7 @@ components/
   trial/                TrialProvider (useTrial().openTrial(source)), TrialDialog (<dialog> nativo), TrialForm, TrialButton
 content/landing.ts      Dictionary tipado + textos es/en
 lib/
-  site-config.ts        appUrl, signupUrl (/register), trialDays, imágenes del hero, ids de secciones
+  site-config.ts        appUrl, trialDays, imágenes del hero, ids de secciones
   leads/lead.ts         modelo Lead + parseLead() (validación compartida cliente/servidor)
   leads/actions.ts      Server Action createLead (honeypot, validación, guardado)
   leads/store.ts        LeadStore: Supabase REST si hay env, .data/leads.jsonl en desarrollo
@@ -32,8 +32,9 @@ supabase/migrations/    SQL de la tabla `leads` (RLS activo, sin políticas púb
 
 ## Prueba gratis y leads
 
-Todo botón "Prueba gratis" es un `<TrialButton source="...">`. Abre el formulario y, si el lead es válido, lo guarda y lleva al usuario a `siteConfig.signupUrl`. Si falla el guardado, el usuario puede continuar al registro igualmente.
+Todo botón "Prueba gratis" es un `<TrialButton source="...">`. Abre el formulario y, si el lead es válido, lo guarda y muestra que en los próximos minutos le enviaremos las credenciales de acceso a su correo (el equipo crea la cuenta manualmente por ahora). Si falla el guardado, se le pide reintentar.
 Variables (solo servidor, ver `.env.example`): `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_LEADS_TABLE`. En producción, si faltan, el lead no se guarda y queda un `console.error`.
+Cada lead se avisa al equipo (`lib/leads/notify.ts`, con `after()`, aunque falle el guardado): correo por Resend (`RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL_TO`, `LEAD_NOTIFY_EMAIL_FROM`) y WhatsApp por CallMeBot (`CALLMEBOT_WHATSAPP`). Cada canal se activa solo si están sus variables.
 
 ## Convenciones
 

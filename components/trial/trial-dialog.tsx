@@ -49,7 +49,7 @@ export function TrialDialog({ open, source, sessionId, onClose }: TrialDialogPro
           <X aria-hidden />
         </button>
       </div>
-      {open && <TrialForm key={sessionId} source={source} />}
+      {open && <TrialForm key={sessionId} source={source} onDone={onClose} />}
     </dialog>
   )
 }

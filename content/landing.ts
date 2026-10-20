@@ -59,7 +59,7 @@ export type Dictionary = {
       submit: string
       submitting: string
       errors: { required: string; invalid: string; email: string; phone: string; tooLong: string; consent: string; server: string; reference: string }
-      success: { title: string; description: string; action: string; redirecting: string }
+      success: { title: string; description: string; note: string; action: string }
     }
   }
   testimonials: { eyebrow: string; title: string; rating: string; ratingLabel: string; starsLabel: string; items: Testimonial[] }
@@ -117,16 +117,16 @@ const es: Dictionary = {
     section: {
       eyebrow: 'Prueba gratis',
       title: 'Pruébalo 7 días con tu propio condominio.',
-      lead: 'Crea tu cuenta, carga tu información y explora todas las funciones. Un asesor de EdiFeasy te contactará para ayudarte con la configuración.',
+      lead: 'Déjanos tus datos y te enviamos tus credenciales de acceso. Carga tu información y explora todas las funciones con el acompañamiento de un asesor de EdiFeasy.',
       steps: [
         { title: 'Cuéntanos de tu condominio', description: 'Déjanos tus datos de contacto y algunos detalles de tu propiedad.' },
-        { title: 'Crea tu cuenta', description: 'Te llevamos directo al registro en la plataforma EdiFeasy.' },
+        { title: 'Recibe tus credenciales', description: 'En pocos minutos te enviamos tu usuario y contraseña para entrar a EdiFeasy.' },
         { title: 'Administra 7 días gratis', description: 'Usa todas las funciones con acompañamiento de nuestro equipo.' },
       ],
     },
     form: {
       title: 'Empieza tu prueba gratis de 7 días',
-      subtitle: 'Cuéntanos sobre tu condominio. Después te llevamos a crear tu cuenta.',
+      subtitle: 'Cuéntanos sobre tu condominio y te enviaremos tus credenciales de acceso.',
       close: 'Cerrar',
       labels: {
         fullName: 'Nombre completo',
@@ -158,7 +158,7 @@ const es: Dictionary = {
       },
       contactTimeOptions: { morning: 'Mañana (8 a. m. – 12 m.)', afternoon: 'Tarde (12 m. – 5 p. m.)', evening: 'Noche (5 p. m. – 8 p. m.)' },
       consent: 'Autorizo a EdiFeasy a tratar mis datos personales para contactarme sobre la prueba y el servicio, conforme a la Ley 1581 de 2012.',
-      submit: 'Continuar al registro',
+      submit: 'Solicitar mi acceso',
       submitting: 'Guardando…',
       errors: {
         required: 'Este campo es obligatorio.',
@@ -167,14 +167,14 @@ const es: Dictionary = {
         phone: 'Ingresa un teléfono válido (7 a 15 dígitos).',
         tooLong: 'El texto es demasiado largo.',
         consent: 'Necesitamos tu autorización para contactarte.',
-        server: 'No pudimos guardar tus datos en este momento. Puedes continuar al registro de todas formas.',
+        server: 'No pudimos guardar tus datos en este momento. Inténtalo de nuevo en unos segundos.',
         reference: 'Código',
       },
       success: {
-        title: '¡Listo! Ya casi empiezas.',
-        description: 'Recibimos tus datos y un asesor te contactará pronto. Ahora crea tu cuenta para activar tus 7 días gratis.',
-        action: 'Crear mi cuenta',
-        redirecting: 'Te estamos llevando al registro…',
+        title: '¡Listo! Recibimos tus datos.',
+        description: 'En los próximos minutos te enviaremos las credenciales de acceso a',
+        note: 'Revisa también tu carpeta de spam. Un asesor te contactará para ayudarte a empezar tus 7 días gratis.',
+        action: 'Entendido',
       },
     },
   },
@@ -244,16 +244,16 @@ const en: Dictionary = {
     section: {
       eyebrow: 'Free trial',
       title: 'Try it for 7 days with your own property.',
-      lead: 'Create your account, load your data and explore every feature. An EdiFeasy advisor will reach out to help you with the setup.',
+      lead: 'Leave your details and we will send you your access credentials. Load your data and explore every feature with an EdiFeasy advisor by your side.',
       steps: [
         { title: 'Tell us about your property', description: 'Leave your contact details and a few facts about your property.' },
-        { title: 'Create your account', description: 'We take you straight to sign-up on the EdiFeasy platform.' },
+        { title: 'Get your credentials', description: 'Within minutes we send you the username and password to sign in to EdiFeasy.' },
         { title: 'Run it free for 7 days', description: 'Use every feature with our team by your side.' },
       ],
     },
     form: {
       title: 'Start your 7-day free trial',
-      subtitle: 'Tell us about your property. Then we will take you to create your account.',
+      subtitle: 'Tell us about your property and we will send you your access credentials.',
       close: 'Close',
       labels: {
         fullName: 'Full name',
@@ -285,7 +285,7 @@ const en: Dictionary = {
       },
       contactTimeOptions: { morning: 'Morning (8 a.m. – 12 p.m.)', afternoon: 'Afternoon (12 – 5 p.m.)', evening: 'Evening (5 – 8 p.m.)' },
       consent: 'I authorize EdiFeasy to process my personal data to contact me about the trial and the service, under Colombian Law 1581 of 2012.',
-      submit: 'Continue to sign-up',
+      submit: 'Request my access',
       submitting: 'Saving…',
       errors: {
         required: 'This field is required.',
@@ -294,14 +294,14 @@ const en: Dictionary = {
         phone: 'Enter a valid phone number (7 to 15 digits).',
         tooLong: 'This text is too long.',
         consent: 'We need your permission to contact you.',
-        server: 'We could not save your details right now. You can still continue to sign-up.',
+        server: 'We could not save your details right now. Please try again in a few seconds.',
         reference: 'Code',
       },
       success: {
-        title: 'All set! You are almost there.',
-        description: 'We received your details and an advisor will contact you soon. Now create your account to activate your 7 free days.',
-        action: 'Create my account',
-        redirecting: 'Taking you to sign-up…',
+        title: 'All set! We received your details.',
+        description: 'Within the next few minutes we will send your access credentials to',
+        note: 'Please check your spam folder too. An advisor will reach out to help you start your 7 free days.',
+        action: 'Got it',
       },
     },
   },
